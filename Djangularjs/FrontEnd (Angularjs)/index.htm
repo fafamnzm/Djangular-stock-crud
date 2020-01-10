@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Stocks" ng-cloak>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stocks</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="app.js"></script>
+</head>
+<body ng-controller="StocksCTRL" style="text-align: center;">
+
+    <div style="padding: 50px;margin: auto;">
+        <div class="input-group row" style="text-align: center;background-color: blanchedalmond;">
+            <div class="col-2"> </div>
+            <label class="col-3"> Search here : </label>
+            <input type="text" class="form-control col-4" ng-model="search"/>
+        </div>
+        <br/>
+        <div>
+            <table class="table table-bordered">
+            <thead class="table-success">
+                <tr>
+                    <th>Abbrivation of the stock</th>
+                    <th>Opening Price</th>
+                    <th>Closing Price</th>
+                    <th>Volume of Transactions</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in resData | filter: search">
+                    <td>{{data.ticker}}</td>
+                    <td>{{data.openPrice}}</td>
+                    <td>{{data.closePrice}}</td>
+                    <td>{{data.volume}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="delete(data.id)">x</button>
+                        <button class="btn btn-info" ng-click="updateStart(data.id); ">Update</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <form class="input-group row" style="margin: auto; text-align: center;">
+            <div class="row col-6">
+                <label class="col-4"> Stock Abbr : </label>&nbsp;
+                <input type="text" class="form-control col-8" ng-model="sendData.ticker" ng-change="upperCaser()" required/>&nbsp;
+            </div>
+            <div class="row col-6">
+                <label class="col-4"> Opening Price : </label>&nbsp;
+                <input type="number" class="form-control col-8" ng-model="sendData.openPrice" min="0" step="0.01"/>&nbsp;
+            </div>
+            <div class="row col-6">
+                <label class="col-4"> Closing Price : </label>&nbsp;
+                <input  type="number" class="form-control col-8" ng-model="sendData.closePrice" min="0" step="0.01"/>&nbsp;
+            </div>
+            <div class="row col-6">
+                <label class="col-4"> Volume of Transactions : </label>&nbsp;
+                <input type="number" class="form-control col-8" ng-model="sendData.volume" min="0" step="any"required/>&nbsp;
+            </div>
+            <div class="row col-12">
+                <div class="col-5">&nbsp;</div>
+                <button ng-if="!viewChanger.update" type="submit" class="btn btn-success" ng-click="Add()">Add</button>
+                <button ng-if="viewChanger.update" type="submit" class="btn btn-success" ng-click="UpdateFinal()">Update</button>
+                <div class="col-5">&nbsp;</div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
