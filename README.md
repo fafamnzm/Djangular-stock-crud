@@ -1,0 +1,1 @@
+# Djangular-stock-crud
